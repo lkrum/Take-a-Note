@@ -1,8 +1,4 @@
-// GIVEN a note-taking application
-// WHEN I open the Note Taker
-// THEN I am presented with a landing page with a link to a notes page
-// WHEN I click on the link to the notes page
-// THEN I am presented with a page with existing notes listed in the left - hand column, plus empty fields to enter a new note title and the note’s text in the right - hand column
+
 // WHEN I enter a new note title and the note’s text
 // THEN a Save icon appears in the navigation at the top of the page
 // WHEN I click on the Save icon
@@ -38,30 +34,24 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
-// Get Route for the index.html page
-app.get('*', (req, res) =>
-  res.sendFile(path.join(__dirname, '/public/index.html'))
-);
 
 // Get Route for the notes.html page
-app.get('/notes', (req, res) =>
+app.get('/notes', (req, res) => {
+  console.log("hit")
   res.sendFile(path.join(__dirname, '/public/notes.html'))
+}
 );
-
-// GET Route for API Notes
-app.get('/api/notes', (req, res) => {
-  console.info(`${req.method} request received for notes`);
-  readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
-});
 
 // Promise version of fs.readFile
 const readFromFile = util.promisify(fs.readFile);
 
+// Function to write data to the JSON file given a destination and some content
 const writeToFile = (destination, content) =>
   fs.writeFile(destination, JSON.stringify(content, null, 4), (err) =>
     err ? console.error(err) : console.info(`\nData written to ${destination}`)
   );
 
+// Function to read data from a given a file and append some content
 const readAndAppend = (content, file) => {
   fs.readFile(file, 'utf8', (err, data) => {
     if (err) {
@@ -74,7 +64,11 @@ const readAndAppend = (content, file) => {
   });
 };
 
-
+// GET Route for API Notes
+app.get('/api/notes', (req, res) => {
+  console.info(`${req.method} request received for notes`);
+  readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
+});
 
 // Post Route for API Notes
 app.post('/api/notes', (req, res) => {
@@ -89,6 +83,7 @@ app.post('/api/notes', (req, res) => {
       note_id: uuid(),
     };
 
+    //reading db.json file and appending new note to existing content 
     readAndAppend(newNote, './db/db.json');
     res.json(`Note added successfully`);
   } else {
@@ -96,6 +91,10 @@ app.post('/api/notes', (req, res) => {
   }
 });
 
+// Get Route for the index.html page
+app.get('*', (req, res) =>
+  res.sendFile(path.join(__dirname, '/public/index.html'))
+);
 
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT} 🚀`)
