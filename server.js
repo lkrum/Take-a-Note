@@ -46,7 +46,7 @@ app.post('/api/notes', (req, res) => {
 });
 
 // Delete route to delete notes when trashcan icon is clicked
-app.delete(`/api/notes/:${id}`, (req, res) => {
+app.delete('/api/notes/:id', (req, res) => {
   const noteId = req.params.id;
   readFromFile('./db/db.json')
     .then((data) => JSON.parse(data))
