@@ -1,8 +1,7 @@
 // importing required files
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
-const util = require('util');
+const { readFromFile, writeToFile, readAndAppend } = require('./Helper/fsHelpers');
 
 // Helper method for generating unique ids
 const uuid = require('./Helper/uuid');
@@ -19,34 +18,11 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
-// Promise version of fs.readFile
-const readFromFile = util.promisify(fs.readFile);
-
-// Function to write data to the JSON file given a destination and some content
-const writeToFile = (destination, content) =>
-  fs.writeFile(destination, JSON.stringify(content, null, 4), (err) =>
-    err ? console.error(err) : console.info(`\nData written to ${destination}`)
-  );
-
-// Function to read data from a given a file and append some content
-const readAndAppend = (content, file) => {
-  fs.readFile(file, 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-    } else {
-      const parsedData = JSON.parse(data);
-      parsedData.push(content);
-      writeToFile(file, parsedData);
-    }
-  });
-};
-
 // GET Route for API Notes
 app.get('/api/notes', (req, res) => {
   console.info(`${req.method} request received for notes`);
   readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 });
-
 
 // Post Route for creating API Notes
 app.post('/api/notes', (req, res) => {
