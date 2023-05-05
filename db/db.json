@@ -1,21 +1,27 @@
 [
     {
-        "title": "Books",
-        "text": "Go to Barnes and Nobles and buy the second part of the Warriors series"
-    },
-    {
         "title": "Shopping List",
         "text": "Buy strawberries, BunchaCrunch, and guacamole at H-E-B",
-        "note_id": "691e"
+        "id": "691e"
     },
     {
         "title": "DogSitting",
         "text": "- feed Bluebell twice a day\n- take her out 5-6 times day\n- give her a green treat around 8pm",
-        "note_id": "c0c4"
+        "id": "c0c4"
     },
     {
         "title": "Write Sticky Notes",
         "text": "Keep track of new codes on sticky notes and post them on my computer",
-        "note_id": "9ea8"
+        "id": "9ea8"
+    },
+    {
+        "title": "Brownies",
+        "text": "bake brownies for Sunday",
+        "id": "bca4"
+    },
+    {
+        "title": "Books",
+        "text": "Go to Barnes and Nobles and buy the second part of the Warriors series",
+        "id": "6a7a"
     }
 ]
