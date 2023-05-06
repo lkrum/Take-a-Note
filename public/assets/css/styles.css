@@ -76,3 +76,7 @@ body {
   padding: 20px;
   cursor: pointer;
 }
+
+.bg-info {
+color: #975c96 !important;
+}
